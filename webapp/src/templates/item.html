@@ -1,0 +1,48 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+
+{% block title %}
+    {{item.name}} Info
+{% endblock %}
+
+{% block content %}
+
+<div class="container col m-4">
+        <h4>What is <b>{{ item.name }}</b> ?</h4>
+        <p class="p-4 hm-4">{{ item.description }}</p>
+
+    </div>
+
+    <section class="section">
+
+      <div class="container">
+        <button class="button is-primary" id="submitBtn">Buy special {{ item.name }}</button>
+      </div>
+
+    </section>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script type="text/javascript">
+    fetch("/config/")
+    .then((result) => { return result.json(); })
+    .then((data) => {
+      // Initialize Stripe
+      const stripe = window.Stripe(data.publicKey);
+
+      document.querySelector("#submitBtn").addEventListener("click", () => {
+        // Get Checkout Session ID
+        fetch("{% url 'checkout-session' id=item.id %}")
+        .then((result) => { return result.json(); })
+        .then((data) => {
+
+          // Redirect to Stripe
+          return stripe.redirectToCheckout({sessionId: data.sessionId})
+        })
+        .then((res) => {
+          console.log(res);
+        });
+      });
+    });
+    </script>
+{% endblock %}
