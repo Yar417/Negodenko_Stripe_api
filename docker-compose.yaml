@@ -1,0 +1,15 @@
+version: '3.10'
+
+services:
+  redis:
+    image: redis
+    restart: always
+
+  webapp:
+    env_file: .env
+    restart: always
+    build:
+      context: /webapp
+    ports:
+      - '8000:8000'
+    command: [ 'python3', './src/manage.py', 'runserver', '0.0.0.0:8000' ]

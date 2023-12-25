@@ -4,22 +4,23 @@ from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
 import stripe
+import os
 
 from .models import Item
 from django.views.generic import ListView, DetailView
 
 
 class SuccessView(TemplateView):
-    template_name = "success.html"
+    template_name = "api/success.html"
 
 
 class CancelView(TemplateView):
-    template_name = "cancel.html"
+    template_name = "api/cancel.html"
 
 
 class HomePageView(ListView):
     model = Item
-    template_name = 'home.html'
+    template_name = 'api/home.html'
     # 5. html context for jinja {{ news }}
     context_object_name = 'items'
     # 6.sort
@@ -33,7 +34,7 @@ class HomePageView(ListView):
 
 class ItemView(DetailView):
     model = Item
-    template_name = 'item.html'
+    template_name = 'api/item.html'
     context_object_name = 'item'
 
 
@@ -46,11 +47,11 @@ def create_checkout_session(request, id):
 
         # domain_url = settings.DOMAIN_URL
 
-        stripe.api_key = settings.STRIPE_SECRET_KEY
+        stripe.api_key = str(os.getenv('STRIPE_SECRET_KEY'))
         try:
             checkout_session = stripe.checkout.Session.create(
-                success_url=domain_url + '/success/',
-                cancel_url=domain_url + '/cancel/',
+                success_url=domain_url + 'success/',
+                cancel_url=domain_url + 'cancel/',
                 payment_method_types=['card'],
                 mode='payment',
                 line_items=[{
@@ -75,5 +76,5 @@ def create_checkout_session(request, id):
 @csrf_exempt
 def stripe_config(request):
     if request.method == 'GET':
-        stripe_config = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
+        stripe_config = {'publicKey': str(os.getenv('STRIPE_PUBLISHABLE_KEY'))}
         return JsonResponse(stripe_config, safe=False)
