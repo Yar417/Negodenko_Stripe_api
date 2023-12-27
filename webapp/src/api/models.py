@@ -15,3 +15,7 @@ class Item(models.Model):
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+
+
+class Order(models.Model):
+    items = models.ManyToManyField(Item)

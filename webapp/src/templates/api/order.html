@@ -1,0 +1,17 @@
+{% extends 'api/home.html' %}
+{% load static %}
+{% block content %}
+<form id="order-form">
+    {% for item in items %}
+    <div>
+        <input type="checkbox" id="item{{ item.id }}" name="item{{ item.id }}">
+        <label for="item{{ item.id }}">{{ item.name }} - {{ item.price }}</label>
+    </div>
+    {% endfor %}
+    <button type="button" id="submitBtn">Оплатить заказ</button>
+</form>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{% static 'js/order.js' %}"></script>
+
+{% endblock %}

@@ -10,4 +10,8 @@ urlpatterns = [
 
     path('cancel/', views.CancelView.as_view(), name='cancel'),
     path('success/', views.SuccessView.as_view(), name='success'),
+
+    path('create-order-checkout-session/', views.create_order_checkout_session, name='order-checkout-session'),
+    path('order/', views.OrderView.as_view(), name='order'),
+
 ]
