@@ -1,14 +1,16 @@
 {% extends 'api/home.html' %}
 {% load static %}
 {% block content %}
-<form id="order-form">
+
+<form class="container-sm" id="order-form">
     {% for item in items %}
-    <div>
-        <input type="checkbox" id="item{{ item.id }}" name="item{{ item.id }}">
-        <label for="item{{ item.id }}">{{ item.name }} - {{ item.price }}</label>
+    <div >
+        <input class="form-check-input" type="checkbox" id="item{{ item.id }}" name="item{{ item.id }}">
+        <label class="form-check-label" for="item{{ item.id }}">{{ item.name }} - {{ item.price }}</label>
     </div>
     {% endfor %}
-    <button type="button" id="submitBtn">Оплатить заказ</button>
+    <button class="btn btn-warning mt-3" type="button" id="submitBtn">Pay for the order</button>
+
 </form>
 
 <script src="https://js.stripe.com/v3/"></script>
