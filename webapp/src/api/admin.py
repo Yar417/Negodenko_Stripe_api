@@ -3,9 +3,9 @@ from .models import Item, Order, Tax, Discount
 
 
 class ItemAdmin(admin.ModelAdmin):
-    search_fields = ['name', 'description', 'price']
-    list_display = ['name', 'price']
-    list_filter = ['price']
+    search_fields = ['name', 'description', 'price', 'currency']
+    list_display = ['name', 'price', 'currency']
+    list_filter = ['price', 'currency']
 
 
 admin.site.register(Item, ItemAdmin)

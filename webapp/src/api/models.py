@@ -9,9 +9,15 @@ class Item(models.Model):
     name = models.CharField('Название', max_length=250, null=False, blank=True)
     description = models.TextField('Описание', max_length=400, null=False, blank=True)
     price = models.DecimalField('Цена', max_digits=10, decimal_places=2)
+    CURRENCY_CHOICES = [
+        ('usd', 'USD'),
+        ('eur', 'EUR'),
+        # добавьте больше валют при необходимости
+    ]
+    currency = models.CharField("Валюта", choices=CURRENCY_CHOICES, max_length=3, default='usd')
 
     def __str__(self):
-        return f'Товар #{self.pk}: {self.name}. Цена: {self.price}'
+        return f'Товар #{self.pk}: {self.name}. Цена: {self.price} {self.currency}'
 
     class Meta:
         verbose_name = 'Товар'

@@ -121,7 +121,7 @@ def create_checkout_session(request, id):
                 mode='payment',
                 line_items=[{
                     'price_data': {
-                        'currency': 'usd',
+                        'currency': item.currency,
                         'product_data': {
                             'name': item.name,
                             'description': item.description,
@@ -183,9 +183,14 @@ def create_order_checkout_session(request):
         line_items = []
 
         for item in order.items.all():
+            if item.currency == 'eur' and data['currency'] == 'usd':
+                item.price = item.price * Decimal(1.1)
+            elif item.currency == 'usd' and data['currency'] == 'eur':
+                item.price = item.price * Decimal(0.91)
+
             line_items.append({
                 'price_data': {
-                    'currency': 'usd',
+                    'currency': data['currency'],  # Use the currency passed from the frontend
                     'product_data': {
                         'name': item.name,
                         'description': item.description,
