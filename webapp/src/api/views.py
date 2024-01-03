@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
 from .models import Item, Order, Tax, Discount
 from django.http.response import JsonResponse
+from django.conf import settings
 from decimal import Decimal
 import stripe
 import json

@@ -13,7 +13,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 DEBUG = True
 
 ALLOWED_HOSTS = ['54.37.142.109', 'localhost', '0.0.0.0.0', '127.0.0.1']
-
+DOMAIN_URL = 'http://54.37.142.109/'
 # Application definition
 
 INSTALLED_APPS = [
